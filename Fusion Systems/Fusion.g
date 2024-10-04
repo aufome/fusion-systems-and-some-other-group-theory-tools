@@ -1,8 +1,7 @@
 # This file has a function to create a fusion system F of a finite group of S given by a finite group G, 
 # and has some other functions that returns F-centric, F-radical, F-essential, fully F-normalized, fully F-centralized subgroups.
 # There is a function that returns the universal fusion system of a finite group.
-# The file also contains functions that can return a minimal characteristic biset of a given fusion system F and the fusion system 
-# of a given biset.
+
 
 # Returns the list of conjugator isomorphisms from P to Q given by G.
 FindConjugatorIsomorphisms := function(G, P, Q)
