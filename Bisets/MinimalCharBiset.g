@@ -56,15 +56,9 @@ FusionSystem := function (S, G)
 		Append(pairsOfSubgroups, Tuples(Filtered(allsubgroups, H->Size(H)=i),2));
 	od;
 
-	if true then
-		for i in [1..Size(pairsOfSubgroups)] do
-			Append(maps, FindConjugatorIsomorphisms(G, pairsOfSubgroups[i][1], pairsOfSubgroups[i][2]));
-		od;
-	else
-		for i in [1..Size(pairsOfSubgroups)] do
-			Append(maps, Filtered(AllIsomorphisms(pairsOfSubgroups[i][1], pairsOfSubgroups[i][2]), f -> IsConjugatorIsomorphism(f) and ConjugatorOfConjugatorIsomorphism(f) in G));
-		od;
-	fi;
+
+	for i in [1..Size(pairsOfSubgroups)] do
+		Append(maps, FindConjugatorIsomorphisms(G, pairsOfSubgroups[i][1], pairsOfSubgroups[i][2]));
 
 	return [maps];
 end;;
