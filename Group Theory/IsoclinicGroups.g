@@ -1,3 +1,11 @@
+# This file contains functions to study isoclinic groups.
+# Two groups are isoclinic if their commutator structures are essentially the same.
+# In other words, their quotient by the center and their commutator subgroups are isomorphic
+# in a way that respects the commutator map.
+#
+# The function AreIsoclinic checks whether two groups are isoclinic.
+# The function FindIsoclinicFamilies groups all small groups of a given order into isoclinic families.
+# These families help classify groups not by full isomorphism, but by their commutator behavior.
 
 
 Commutator := function(a, b)
