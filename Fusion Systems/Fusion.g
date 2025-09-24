@@ -61,41 +61,6 @@ FusionSystem := function (S, G)
 	return [maps];
 end;;
 
-
-FusionSystem2 := function (S, G)
-	local maps, ccG, reps, SinG, fs, allsubgroups, pairsOfSubgroups, ccS, i;
-
-	maps := [];
-	ccG := ConjugacyClassesSubgroups(G);
-	if not IsSubgroup(G, S) then
-		reps := Filtered(List(ccG, Representative), i -> Size(i) = Size(S));
-		reps := Filtered(reps, i -> IdGroup(i) = IdGroup(S));
-		
-		for SinG in reps do
-			fs := FusionSystem(SinG, G);
-			Append(maps, fs);
-		od;
-		return maps;
-	else
-		SinG := S;
-	fi;
-
-	pairsOfSubgroups := [];
-
-	ccS := ConjugacyClassesSubgroups(SinG);
-	for i in [Size(ccS), Size(ccS)-1..1] do
-		Append(pairsOfSubgroups, Tuples(ccS[i], 2));
-	od;
-
-
-
-	for i in [1..Size(pairsOfSubgroups)] do
-		Append(maps, FindConjugatorIsomorphisms(G, pairsOfSubgroups[i][1], pairsOfSubgroups[i][2]));
-	od;
-
-	return [maps];
-end;;
-
 ######################
 
 # Finds all F-conjugacy classes of a given fusion system.
@@ -931,32 +896,6 @@ Minimals1 := function(G)
 end;;
 
 
-Minimals2 := function(G)
-	local cc, R, S, isMinimal, fsRG, fsRS, minimals, index;
-	minimals := [];
-
-	for cc in ConjugacyClassesSubgroups(G) do
-		R := cc[1];
-		isMinimal := true;
-		fsRG := FusionSystem2(R, G);
-		for S in AllSubgroups(G) do
-			if not (IsSubgroup(S, R)) then continue; fi;
-			if S = G then continue; fi;
-			fsRS := FusionSystem2(R, S);
-			if AreIsomFS(fsRS, fsRG) then
-				isMinimal := false;
-				break;
-			fi;
-		od;
-		if (isMinimal) then 
-		StructureDescription(R);
-		Append(minimals, [R]); 
-		fi;
-	od;
-
-	return minimals;
-end;;
-
 
 SearchMinimals := function(low, up)
 	local index, G;
@@ -970,52 +909,6 @@ SearchMinimals := function(low, up)
 		od;
 	od;
 end;;
-
-
-
-SearchIncompatibleMinimals := function (low, up)
-
-	local index, G, m1, m2, minimals, incompatible, indexM, myId;
-
-	if low > up then return fail; fi;
-	minimals := [];
-	#myId := [4,5,8,9,10,11,12,13,14,23,24,25,30,90,91,92,93,94];
-
-	for index in [low..up] do
-		#if index = 32 then continue; fi;
-		for G in AllSmallGroups(index) do
-			if IsAbelian(G) then continue; fi;
-			#if IsPGroup(G) and (Size(G) mod 2 = 0) then continue; fi;
-			#if  (IdGroup(G)[2] in myId) then continue; fi;
-			if IsPGroup(G) then continue; fi;
-			m1 := Minimals1(G);
-			m2 := Minimals2(G);
-			
-			if Size(m1) = Size(m2) then
-				for indexM in [1..Size(m1)] do
-					if not (IdGroup(m1[indexM]) = IdGroup(m2[indexM])) then 
-						Append(minimals, [G]);
-						break;
-					fi;
-				od;
-			else 
-				Append(minimals, [G]);
-			fi;
-		od;
-	od;
-
-	if IsEmpty(minimals) then return fail; fi;
-
-	Print("Incompatible groups between ", low, " and ", up, " are \n");
-	for G in minimals do
-		Print(IdGroup(G)," ", StructureDescription(G));
-		Print("\n");
-	od;
-	#return minimals;
-end;;
-
-
-
 
 
 ListMinimalGroupsWithFS := function (num)
