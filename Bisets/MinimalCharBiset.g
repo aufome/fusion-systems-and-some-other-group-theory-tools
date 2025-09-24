@@ -1,9 +1,10 @@
-# This file has a function named MinimalCharacteristicBiset having a fusion system as an input.
-# For a given abstract saturated fusion system F on a finite p-group S, this functinon returns
-# the minimal characteristic biset appears as disjoint union of orbits of the form [n, P, phi].
-# The bracket notation means that it is an (S, S) orbit that contains a point with stabilizer (P, phi)
+# This file defines a function named MinimalCharacteristicBiset, which takes a fusion system as input.
+# For a given abstract saturated fusion system F on a finite p-group S, this function returns
+# the minimal characteristic biset, expressed as a disjoint union of orbits of the form [n, P, phi].
+# The bracket notation means that it is an (S, S)-orbit containing a point with stabilizer (P, phi),
 # where P is a subgroup of S, phi is an F-isomorphism from P to S, and n is the number of copies of these orbits.
-# To create a fusion system that is coherent with the input of this function, FusionSystem can be used.
+# To create a fusion system compatible with the input of this function, FusionSystem can be used.
+
 
 # Returns the list of conjugator isomorphisms from P to Q given by G.
 FindConjugatorIsomorphisms := function(G, P, Q)
